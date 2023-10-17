@@ -96,13 +96,22 @@ namespace aplicacionWeb
         protected global::System.Web.UI.UpdatePanel upImg;
 
         /// <summary>
-        /// Control txtUrlImagen.
+        /// Control fileImagen.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtUrlImagen;
+        protected global::System.Web.UI.WebControls.FileUpload fileImagen;
+
+        /// <summary>
+        /// Control btnCargar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCargar;
 
         /// <summary>
         /// Control imgPerfil.

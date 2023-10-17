@@ -27,8 +27,8 @@ namespace aplicacionWeb
                         txtNombre.Text = aux.Nombre;
                         txtApellido.Text = aux.Apellido;
                         txtFecha.Text = aux.FechaNacimiento;
-                        txtUrlImagen.Text = aux.UrlImagen;
-                        txtUrlImagen_TextChanged(sender, e);
+                        //txtUrlImagen.Text = aux.UrlImagen;
+                        //txtUrlImagen_TextChanged(sender, e);
                     }
                     catch (Exception ex)
                     {
@@ -45,24 +45,24 @@ namespace aplicacionWeb
             Response.Redirect("Default.aspx", false);
         }
 
-        protected void txtUrlImagen_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (txtUrlImagen.Text == "")
-                {
-                    imgPerfil.ImageUrl = "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg";
-                }
-                else
-                {
-                    imgPerfil.ImageUrl = txtUrlImagen.Text;
-                }
-            }
-            catch (Exception)
-            {
-                imgPerfil.ImageUrl = "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg";
-            }
-        }
+        //protected void txtUrlImagen_TextChanged(object sender, EventArgs e)
+        //{
+        //    try
+        //    {
+        //        if (txtUrlImagen.Text == "")
+        //        {
+        //            imgPerfil.ImageUrl = "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg";
+        //        }
+        //        else
+        //        {
+        //            imgPerfil.ImageUrl = txtUrlImagen.Text;
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        imgPerfil.ImageUrl = "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg";
+        //    }
+        //}
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
@@ -75,10 +75,15 @@ namespace aplicacionWeb
                 aux.Nombre = txtNombre.Text;
                 aux.Apellido = txtApellido.Text;
                 aux.FechaNacimiento = txtFecha.Text;
-                aux.UrlImagen = txtUrlImagen.Text;
+
+                string ruta = Server.MapPath("./Images/");
+                txtImagen.PostedFile.SaveAs(ruta + "perfil-" + aux.Id + ".jpg");
+                aux.UrlImagen = "perfil-" + aux.Id + ".jpg";
+
+
+                //aux.UrlImagen = txtUrlImagen.Text;
 
                 negocio.ActualizarDatos(aux);
-
                 Response.Redirect("Default.aspx", false);
             }
             catch (Exception ex)
@@ -86,6 +91,14 @@ namespace aplicacionWeb
                 Session["error"] = ex;
                 Response.Redirect("Error.aspx", false);
             }
+        }
+
+        protected void btnCargar_Click(object sender, EventArgs e)
+        {
+            //if (txtImagen.PostedFile != null && txtImagen.PostedFile.ContentLength > 0)
+            //{
+            //    imgPerfil.ImageUrl = "~/Images/" + "perfil-" + Session["idUsuario"].ToString() + ".jpg";
+            //}
         }
     }
 }

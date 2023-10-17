@@ -50,11 +50,15 @@
                 <asp:UpdatePanel ID="upImg" runat="server">
                     <ContentTemplate>
                 <div class="mb-3">
-                    <label for="txtUrlImagen" class="form-label">Imagen</label>
-                    <asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" AutoPostBack="true"
-                        OnTextChanged ="txtUrlImagen_TextChanged"></asp:TextBox>
+                    <label for="txtImagen" class="form-label">Imagen</label>
+                    <%--<asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" AutoPostBack="true"
+                        OnTextChanged ="txtUrlImagen_TextChanged"></asp:TextBox>--%>
+                    <%--<input type="file" id="txtImagen" runat="server" class="form-control"/>--%>
+                    <asp:FileUpload ID="fileImagen" runat="server" CssClass="form-control"/>
+                    <br />
+                    <asp:Button ID="btnCargar" runat="server" Text="Cargar" CssClass="btn btn-primary" OnClick="btnCargar_Click" AutoPostBack="false"/>
                 </div>
-                        <asp:Image ID="imgPerfil" runat="server" CssClass="img-fluid mb-3" ImageUrl="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" ImageAlign="Middle" />
+                        <asp:Image ID="imgPerfil" runat="server" CssClass="img-fluid mb-3" ImageUrl="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" ImageAlign="Middle"/>
                     </ContentTemplate>
                 </asp:UpdatePanel>
             </div>

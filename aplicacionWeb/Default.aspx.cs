@@ -28,7 +28,16 @@ namespace aplicacionWeb
             {
                 if (int.Parse(Session["idUsuario"].ToString()) != -1)
                 {
-                    h1Title.InnerText = h1Title.InnerText + " " + Session["mailUsuario"].ToString();
+                    UsuarioNegocio uNegocio = new UsuarioNegocio();
+                    Usuario aux = uNegocio.Listar((int)Session["idUsuario"]);
+                    if (String.IsNullOrEmpty(aux.Nombre))
+                    {
+                        h1Title.InnerText = h1Title.InnerText + " " + Session["mailUsuario"].ToString();
+                    }
+                    else
+                    {
+                        h1Title.InnerText = h1Title.InnerText + " " + aux.Nombre;
+                    }
                 }
             }
         }
