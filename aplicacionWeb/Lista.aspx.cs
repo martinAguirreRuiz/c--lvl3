@@ -15,10 +15,17 @@ namespace aplicacionWeb
         {
             if (!IsPostBack)
             {
-                PokemonNegocio negocio = new PokemonNegocio();
-                dgvPokemons.DataSource = negocio.listar();
-                dgvPokemons.DataBind();
-                Session.Add("idSeleccionado", null);
+                if (int.Parse(Session["idUsuario"].ToString()) == -1)
+                {
+                    Response.Redirect("Default.aspx", false);
+                }
+                else
+                {
+                    PokemonNegocio negocio = new PokemonNegocio();
+                    dgvPokemons.DataSource = negocio.listar();
+                    dgvPokemons.DataBind();
+                    Session.Add("idSeleccionado", null);
+                }
             }
         }
 

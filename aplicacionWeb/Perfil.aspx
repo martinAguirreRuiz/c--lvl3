@@ -11,6 +11,9 @@
             display:block;
             margin: 0 auto;
         }
+        .lblImg{
+            color:red;
+        }
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -47,8 +50,6 @@
             </div>
 
             <div class="col">
-                <asp:UpdatePanel ID="upImg" runat="server">
-                    <ContentTemplate>
                 <div class="mb-3">
                     <label for="txtImagen" class="form-label">Imagen</label>
                     <%--<asp:TextBox ID="txtUrlImagen" runat="server" CssClass="form-control" AutoPostBack="true"
@@ -57,7 +58,10 @@
                     <asp:FileUpload ID="fileImagen" runat="server" CssClass="form-control"/>
                     <br />
                     <asp:Button ID="btnCargar" runat="server" Text="Cargar" CssClass="btn btn-primary" OnClick="btnCargar_Click" AutoPostBack="false"/>
+                    <label class="lblImg" id="lblImg" runat="server" visible="false">Por favor completa únicamente con archivos ".jpg"</label>
                 </div>
+                <asp:UpdatePanel ID="upImg" runat="server">
+                    <ContentTemplate>
                         <asp:Image ID="imgPerfil" runat="server" CssClass="img-fluid mb-3" ImageUrl="https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg" ImageAlign="Middle"/>
                     </ContentTemplate>
                 </asp:UpdatePanel>

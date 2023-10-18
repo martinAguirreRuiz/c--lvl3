@@ -48,7 +48,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="Cierre.aspx">Cerrar Sesión</a>
                             </li>
-                            </a>
                             <%}%>
                         </ul>
                     </div>
@@ -63,5 +62,3 @@
     </form>
 </body>
 </html>
-
-<%--ESTABA POR HACER TODAS LAS FUNCIONALIDADES DEL GRID VIEW--%>

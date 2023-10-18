@@ -15,6 +15,13 @@ namespace aplicacionWeb
         {
             if (!IsPostBack)
             {
+                if (int.Parse(Session["idUsuario"].ToString()) == -1)
+                {
+                    Response.Redirect("Default.aspx", false);
+                }
+                else
+                {
+
                 if ((int)Session["idUsuario"] != -1)
                 {
                     UsuarioNegocio negocio = new UsuarioNegocio();
@@ -27,14 +34,13 @@ namespace aplicacionWeb
                         txtNombre.Text = aux.Nombre;
                         txtApellido.Text = aux.Apellido;
                         txtFecha.Text = aux.FechaNacimiento;
-                        //txtUrlImagen.Text = aux.UrlImagen;
-                        //txtUrlImagen_TextChanged(sender, e);
                     }
                     catch (Exception ex)
                     {
                         Session["error"] = ex;
                         Response.Redirect("Error.aspx", false);
                     }
+                }
                 }
 
             }
@@ -44,25 +50,6 @@ namespace aplicacionWeb
         {
             Response.Redirect("Default.aspx", false);
         }
-
-        //protected void txtUrlImagen_TextChanged(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        if (txtUrlImagen.Text == "")
-        //        {
-        //            imgPerfil.ImageUrl = "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg";
-        //        }
-        //        else
-        //        {
-        //            imgPerfil.ImageUrl = txtUrlImagen.Text;
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        imgPerfil.ImageUrl = "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg";
-        //    }
-        //}
 
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
@@ -75,13 +62,14 @@ namespace aplicacionWeb
                 aux.Nombre = txtNombre.Text;
                 aux.Apellido = txtApellido.Text;
                 aux.FechaNacimiento = txtFecha.Text;
-
-                string ruta = Server.MapPath("./Images/");
-                txtImagen.PostedFile.SaveAs(ruta + "perfil-" + aux.Id + ".jpg");
-                aux.UrlImagen = "perfil-" + aux.Id + ".jpg";
-
-
-                //aux.UrlImagen = txtUrlImagen.Text;
+                if (Session["ruta"] != null)
+                {
+                    aux.UrlImagen = Session["ruta"].ToString();
+                }
+                else
+                {
+                    aux.UrlImagen = "";
+                }
 
                 negocio.ActualizarDatos(aux);
                 Response.Redirect("Default.aspx", false);
@@ -95,10 +83,22 @@ namespace aplicacionWeb
 
         protected void btnCargar_Click(object sender, EventArgs e)
         {
-            //if (txtImagen.PostedFile != null && txtImagen.PostedFile.ContentLength > 0)
-            //{
-            //    imgPerfil.ImageUrl = "~/Images/" + "perfil-" + Session["idUsuario"].ToString() + ".jpg";
-            //}
+            if (fileImagen.HasFile)
+            {
+                string extension = System.IO.Path.GetExtension(fileImagen.FileName);
+                if (extension == ".jpg")
+                {
+                    lblImg.Visible = false; 
+                    string ruta = Server.MapPath("./Images/");
+                    fileImagen.PostedFile.SaveAs(ruta + "perfil-" + Session["idUsuario"].ToString() + ".jpg");
+                    Session.Add("ruta", "perfil-" + Session["idUsuario"].ToString() + ".jpg");
+                    imgPerfil.ImageUrl = "~/Images/perfil-" + Session["idUsuario"].ToString() + ".jpg";
+                }
+                else
+                {
+                    lblImg.Visible = true;
+                }
+            }
         }
     }
 }

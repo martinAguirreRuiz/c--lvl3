@@ -12,7 +12,13 @@ namespace aplicacionWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                if (int.Parse(Session["idUsuario"].ToString()) == -1)
+                {
+                    Response.Redirect("Default.aspx", false);
+                }
+            }
         }
 
         protected void btnAceptar_Click(object sender, EventArgs e)

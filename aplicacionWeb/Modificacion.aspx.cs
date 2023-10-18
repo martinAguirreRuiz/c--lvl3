@@ -13,42 +13,47 @@ namespace aplicacionWeb
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Si no tiene ID entonces es nuevo. Pero si sí tiene ID entonces es para modificar. O más fácil, si el seleccionado es null, entonces es nuevo, pero sino es para modificar. Puedo verificar las dos cosas.
             try
             {
                 if (!IsPostBack)
                 {
-
-                    ElementoNegocio elementoNegocio = new ElementoNegocio();
-
-                    ddlTipo.DataSource = elementoNegocio.listar();
-                    ddlTipo.DataTextField = "Descripcion";
-                    ddlTipo.DataValueField = "Id";
-                    ddlTipo.DataBind();
-
-                    ddlDebilidad.DataSource = elementoNegocio.listar();
-                    ddlDebilidad.DataTextField = "Descripcion";
-                    ddlDebilidad.DataValueField = "Id";
-                    ddlDebilidad.DataBind();
-
-                    if (Session["idSeleccionado"] == null) //Agregar (llega todo vacío)
+                    if (int.Parse(Session["idUsuario"].ToString()) == -1)
                     {
+                        Response.Redirect("Default.aspx", false);
                     }
                     else
                     {
-                        //Modifico (vienen las cosas precargadas)
-                        PokemonNegocio negocio = new PokemonNegocio();
+                        ElementoNegocio elementoNegocio = new ElementoNegocio();
 
-                        Pokemon seleccionado = negocio.listarUnico(int.Parse(Session["idSeleccionado"].ToString()));
+                        ddlTipo.DataSource = elementoNegocio.listar();
+                        ddlTipo.DataTextField = "Descripcion";
+                        ddlTipo.DataValueField = "Id";
+                        ddlTipo.DataBind();
 
-                        txtNombre.Text = seleccionado.Nombre;
-                        txtNumero.Text = seleccionado.Numero.ToString();
-                        txtDescripcion.Text = seleccionado.Descripcion;
-                        ddlTipo.SelectedValue = seleccionado.Tipo.Id.ToString();
-                        ddlDebilidad.SelectedValue = seleccionado.Debilidad.Id.ToString();
-                        cbActivo.Checked = seleccionado.Activo ? true : false;
-                        txtUrlImagen.Text = seleccionado.UrlImagen;
-                        txtUrlImagen_TextChanged(sender, e);
+                        ddlDebilidad.DataSource = elementoNegocio.listar();
+                        ddlDebilidad.DataTextField = "Descripcion";
+                        ddlDebilidad.DataValueField = "Id";
+                        ddlDebilidad.DataBind();
+
+                        if (Session["idSeleccionado"] == null) //Agregar (llega todo vacío)
+                        {
+                        }
+                        else
+                        {
+                            //Modifico (vienen las cosas precargadas)
+                            PokemonNegocio negocio = new PokemonNegocio();
+
+                            Pokemon seleccionado = negocio.listarUnico(int.Parse(Session["idSeleccionado"].ToString()));
+
+                            txtNombre.Text = seleccionado.Nombre;
+                            txtNumero.Text = seleccionado.Numero.ToString();
+                            txtDescripcion.Text = seleccionado.Descripcion;
+                            ddlTipo.SelectedValue = seleccionado.Tipo.Id.ToString();
+                            ddlDebilidad.SelectedValue = seleccionado.Debilidad.Id.ToString();
+                            cbActivo.Checked = seleccionado.Activo ? true : false;
+                            txtUrlImagen.Text = seleccionado.UrlImagen;
+                            txtUrlImagen_TextChanged(sender, e);
+                        }
                     }
                 }
             }
